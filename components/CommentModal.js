@@ -18,12 +18,17 @@ import {
 } from "firebase/firestore";
 import Moment from "react-moment";
 import { userState } from "../atom/userAtom";
+import { Picker } from "emoji-mart";
+import "emoji-mart/css/emoji-mart.css";
+
+
 export default function CommentModal() {
   const [open, setOpen] = useRecoilState(modalState);
   const [postId] = useRecoilState(postIdState);
   const [currentUser] = useRecoilState(userState);
   const [post, setPost] = useState({});
   const [input, setInput] = useState("");
+  const [showEmojis, setShowEmojis] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -45,7 +50,16 @@ export default function CommentModal() {
     setOpen(false);
     setInput("");
     router.push(`/posts/${postId}`);
+    setShowEmojis(false);
   }
+
+  const addEmoji = (e) => {
+    let sym = e.unified.split("-");
+    let codesArray = [];
+    sym.forEach((el) => codesArray.push("0x" + el));
+    let emoji = String.fromCodePoint(...codesArray);
+    setInput(input + emoji);
+  };
 
   return (
     <div>
@@ -106,7 +120,7 @@ export default function CommentModal() {
                   <div className="flex">
                     <div
                       className=""
-                      // onClick={() => filePickerRef.current.click()}
+                    // onClick={() => filePickerRef.current.click()}
                     >
                       <PhotographIcon className="h-10 w-10 hoverEffect p-2 text-sky-500 hover:bg-sky-100" />
                       {/* <input
@@ -116,7 +130,23 @@ export default function CommentModal() {
                         onChange={addImageToPost}
                       /> */}
                     </div>
-                    <EmojiHappyIcon className="h-10 w-10 hoverEffect p-2 text-sky-500 hover:bg-sky-100" />
+                    <div onClick={() => setShowEmojis(!showEmojis)}>
+                      <EmojiHappyIcon className="h-10 w-10 hoverEffect p-2 text-sky-500 hover:bg-sky-100" />
+                    </div>
+                    {showEmojis && (
+                      <Picker
+                        onSelect={addEmoji}
+                        style={{
+                          position: "absolute",
+                          marginTop: "40px",
+                          marginLeft: -40,
+                          maxWidth: "250px",
+                          maxHeight: "200px",
+                          overflow: "hidden",
+                          borderRadius: "20px",
+                        }}
+                      />
+                    )}
                   </div>
                   <button
                     onClick={sendComment}
