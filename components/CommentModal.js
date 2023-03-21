@@ -18,8 +18,8 @@ import {
 } from "firebase/firestore";
 import Moment from "react-moment";
 import { userState } from "../atom/userAtom";
-import { Picker } from "emoji-mart";
-import "emoji-mart/css/emoji-mart.css";
+import data from '@emoji-mart/data'
+import Picker from '@emoji-mart/react'
 
 
 export default function CommentModal() {
@@ -30,6 +30,8 @@ export default function CommentModal() {
   const [input, setInput] = useState("");
   const [showEmojis, setShowEmojis] = useState(false);
   const router = useRouter();
+
+  new Picker({ data })
 
   useEffect(() => {
     onSnapshot(doc(db, "posts", postId), (snapshot) => {
@@ -123,29 +125,18 @@ export default function CommentModal() {
                     // onClick={() => filePickerRef.current.click()}
                     >
                       <PhotographIcon className="h-10 w-10 hoverEffect p-2 text-sky-500 hover:bg-sky-100" />
-                      {/* <input
-                        type="file"
-                        hidden
-                        ref={filePickerRef}
-                        onChange={addImageToPost}
-                      /> */}
                     </div>
                     <div onClick={() => setShowEmojis(!showEmojis)}>
                       <EmojiHappyIcon className="h-10 w-10 hoverEffect p-2 text-sky-500 hover:bg-sky-100" />
                     </div>
                     {showEmojis && (
-                      <Picker
-                        onSelect={addEmoji}
-                        style={{
-                          position: "absolute",
-                          marginTop: "40px",
-                          marginLeft: -40,
-                          maxWidth: "250px",
-                          maxHeight: "200px",
-                          overflow: "hidden",
-                          borderRadius: "20px",
-                        }}
-                      />
+                      <div className="absolute mt-[40px] ml-[-60px] sm:ml-0">
+                        <Picker
+                          data={data}
+                          onEmojiSelect={addEmoji}
+                          theme="light"
+                        />
+                      </div>
                     )}
                   </div>
                   <button

@@ -17,8 +17,8 @@ import { db, storage } from "../firebase";
 import { useRecoilState } from "recoil";
 import { userState } from "../atom/userAtom";
 import { signOut, getAuth } from "firebase/auth";
-import { Picker } from "emoji-mart";
-import "emoji-mart/css/emoji-mart.css";
+import data from '@emoji-mart/data'
+import Picker from '@emoji-mart/react'
 
 
 export default function Input() {
@@ -29,6 +29,8 @@ export default function Input() {
   const [showEmojis, setShowEmojis] = useState(false);
   const filePickerRef = useRef(null);
   const auth = getAuth();
+
+  new Picker({ data })
 
   const sendPost = async () => {
     if (loading) return;
@@ -133,17 +135,13 @@ export default function Input() {
                       <EmojiHappyIcon className="h-10 w-10 hoverEffect p-2 text-sky-500 hover:bg-sky-100"/>
                     </div>
                     {showEmojis && (
+                      <div className="absolute mt-[40px] ml-[-40px] sm:ml-0">
                       <Picker
-                        onSelect={addEmoji}
-                        style={{
-                          position: "absolute",
-                          marginTop: "40px",
-                          marginLeft: -40,
-                          maxWidth: "280px",
-                          borderRadius: "20px",
-                        }}
-                      
+                       data={data} 
+                       onEmojiSelect={addEmoji}
+                       theme="light"
                       />
+                      </div>
                     )}
                   </div>
                   <button
