@@ -18,13 +18,13 @@ import { doc, getDoc } from "firebase/firestore";
 import { useRecoilState } from "recoil";
 import { userState } from "../atom/userAtom";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 export default function Sidebar() {
   const router = useRouter();
   const [currentUser, setCurrentUser] = useRecoilState(userState);
-  console.log(currentUser);
   const auth = getAuth();
-  
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -45,7 +45,7 @@ export default function Sidebar() {
     setCurrentUser(null);
   }
   return (
-    <div className="hidden sm:flex flex-col p-2 xl:items-start fixed h-full xl:ml-24">
+    <div className="sm:flex flex-col p-2 xl:items-start fixed h-full xl:ml-24">
       {/* Twitter Logo */}
       <div className="hoverEffect p-0 hover:bg-blue-100 xl:px-1">
         <Image
@@ -58,15 +58,23 @@ export default function Sidebar() {
       {/* Menu */}
 
       <div className="mt-4 mb-2.5 xl:items-start">
-        <SidebarMenuItem text="Home" Icon={HomeIcon} active />
-        <SidebarMenuItem text="Explore" Icon={HashtagIcon} />
+        <Link href="/">
+          <SidebarMenuItem text="Home" Icon={HomeIcon} active />
+        </Link>
+        <Link href="/explore">
+          <SidebarMenuItem text="Explore" Icon={HashtagIcon} />
+        </Link>
         {currentUser && (
           <>
-            <SidebarMenuItem text="Notifications" Icon={BellIcon} />
+            <Link href="/notification">
+              <SidebarMenuItem text="Notifications" Icon={BellIcon} />
+            </Link>
+            <Link href="/message">
             <SidebarMenuItem text="Messages" Icon={InboxIcon} />
-            <SidebarMenuItem text="Bookmarks" Icon={BookmarkIcon} />
-            <SidebarMenuItem text="Lists" Icon={ClipboardIcon} />
+            </Link>
+            <Link href="/profile">
             <SidebarMenuItem text="Profile" Icon={UserIcon} />
+            </Link>
             <SidebarMenuItem text="More" Icon={DotsCircleHorizontalIcon} />
           </>
         )}
@@ -76,13 +84,16 @@ export default function Sidebar() {
 
       {currentUser ? (
         <>
-          <button  onClick={onSignOut} className="bg-blue-400 text-white rounded-full w-56 h-12 font-bold shadow-md hover:brightness-95 text-lg hidden xl:inline">
+          <button
+            onClick={onSignOut}
+            className="bg-red-400 text-white rounded-full w-12 xl:w-36 h-6 xl:h-12 font-normal xl:font-bold shadow-md hover:brightness-95 text-xs xl:text-lg xl:inline"
+          >
             Sign out
           </button>
 
           {/* Mini-Profile */}
 
-          <div className="hoverEffect text-gray-700 flex items-center justify-center xl:justify-start mt-auto">
+          <div className="hoverEffect text-gray-700 flex items-center justify-start mt-auto">
             <img
               src={currentUser?.userImg}
               alt="user-img"
@@ -98,7 +109,7 @@ export default function Sidebar() {
       ) : (
         <button
           onClick={() => router.push("/auth/signin")}
-          className="bg-blue-400 text-white rounded-full w-36 h-12 font-bold shadow-md hover:brightness-95 text-lg hidden xl:inline"
+          className="bg-blue-400 text-white rounded-full w-12 xl:w-36 h-6 xl:h-12 font-normal xl:font-bold shadow-md hover:brightness-95 text-xs xl:text-lg xl:inline"
         >
           Sign in
         </button>

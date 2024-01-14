@@ -1,28 +1,34 @@
 
-import CommentModal from "../components/CommentModal";
-import Feed from "../components/Feed";
 import Sidebar from "../components/Sidebar";
 import Widgets from "../components/Widgets";
-import Header from "../components/Header";
 import Layout from "../components/Layout";
+import Header from "../components/Header";
+import NotificationComp from "../components/NotificationComp";
 
-export default function Home({ newsResults }) {
+
+export default function Notification({ newsResults }) {
   return (
     <div>
-      <Header title={"Home"} />
-      <Layout>
+      <Header title={"Notification"} />
+
+     <Layout>
+        {/* Sidebar */}
         <Sidebar />
-        <Feed />
+
+        {/* notifications */}
+
+       <NotificationComp />
+
+        {/* Widgets */}
+
         <Widgets
           newsResults={newsResults?.articles}
         />
-        <CommentModal />
-      </Layout>
+
+        </Layout>
     </div>
   );
 }
-
-// https://saurav.tech/NewsAPI/top-headlines/category/business/us.json
 
 export async function getServerSideProps() {
   const newsResults = await fetch(
