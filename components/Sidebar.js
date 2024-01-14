@@ -103,7 +103,6 @@ export default function Sidebar() {
               <h4 className="font-bold">{currentUser?.name}</h4>
               <p className="text-gray-500">@{currentUser?.username}</p>
             </div>
-            <DotsHorizontalIcon className="h-5 xl:ml-8 hidden xl:inline" />
           </div>
         </>
       ) : (
