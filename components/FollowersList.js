@@ -11,10 +11,9 @@ const FollowersList = () => {
             "https://randomuser.me/api/?results=30&inc=name,login,picture"
           );
           const result = await response.json();
-          console.log(result.results);
           setRandomUserNum(result);
         } catch (err) {
-          console.error("Error fetching data:", err.message);
+          return err.message;
         }
       };
     

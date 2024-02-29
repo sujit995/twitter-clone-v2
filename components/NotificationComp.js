@@ -1,12 +1,10 @@
 import React from "react";
 import { getAuth } from "firebase/auth";
 import moment from 'moment';
-import dateFormat from 'dateformat'
 
 const NotificationComp = () => {
   const auth = getAuth();
   const user = auth.currentUser;
-  console.log(user)
   
   let currentDate = moment().format('MMMM Do YYYY')
 

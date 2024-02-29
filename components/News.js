@@ -12,7 +12,7 @@ export default function News({ article }) {
           className="rounded-xl "
           width="70"
           src={article.urlToImage}
-          alt=""
+          alt="Iarticle"
         />
       </div>
     </a>

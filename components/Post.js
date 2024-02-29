@@ -75,6 +75,20 @@ import {
         router.push("/");
       }
     }
+
+    async function sharePost() {
+      if (navigator.share) {
+          navigator.share({
+              title: post.data()?.text,
+              text: post.data()?.text,
+              url: window.location.href,
+          })
+              .then(() => console.log("Successful share"))
+              .catch((error) => console.log("Error sharing:", error));
+      } else {
+          console.log("Web Share API not supported");
+      }
+  }
   
     return (
       <div className="flex p-3 cursor-pointer border-b border-gray-200">
@@ -121,7 +135,7 @@ import {
             onClick={() => router.push(`/posts/${id}`)}
             className="rounded-2xl mr-2"
             src={post?.data()?.image}
-            alt=""
+            alt="Ipost"
           />
   
           {/* icons */}
@@ -172,7 +186,7 @@ import {
               )}
             </div>
   
-            <ShareIcon className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-sky-100" />
+            <ShareIcon onClick={sharePost} className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-sky-100" />
             <ChartBarIcon className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-sky-100" />
           </div>
         </div>

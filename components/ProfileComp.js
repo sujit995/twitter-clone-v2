@@ -7,7 +7,6 @@ import dateFormat from 'dateformat'
 const ProfileComp = () => {
     const auth = getAuth();
     const user = auth.currentUser;
-    console.log(user)
     
     const createdTime = user?.metadata.creationTime
 
