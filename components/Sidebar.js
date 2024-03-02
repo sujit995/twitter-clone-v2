@@ -94,7 +94,7 @@ export default function Sidebar() {
 
           {/* Mini-Profile */}
 
-          <div className="hoverEffect text-gray-700 flex items-center justify-start mt-auto">
+          <div className="hoverEffect hidden xl:inline text-gray-700 items-center justify-start mt-auto">
             <img
               src={currentUser?.userImg}
               alt="user-img"

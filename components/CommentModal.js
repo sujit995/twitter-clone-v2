@@ -69,7 +69,7 @@ export default function CommentModal() {
         <Modal
           isOpen={open}
           onRequestClose={() => setOpen(false)}
-          className="max-w-lg w-[90%]  absolute top-24 left-[50%] translate-x-[-50%] bg-white border-2 border-gray-200 rounded-xl shadow-md"
+          className="max-w-lg w-[90%]  absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white border-2 border-gray-200 rounded-xl shadow-md"
         >
           <div className="p-1">
             <div className="border-b border-gray-200 py-2 px-1.5">
@@ -103,7 +103,7 @@ export default function CommentModal() {
 
             <div className="flex  p-3 space-x-3">
               <img
-                src={currentUser.userImg}
+                src={currentUser?.userImg}
                 alt="user-img"
                 className="h-11 w-11 rounded-full cursor-pointer hover:brightness-95"
               />
@@ -115,15 +115,11 @@ export default function CommentModal() {
                     placeholder="Tweet your reply"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                  ></textarea>
+                  />
                 </div>
-
                 <div className="flex items-center justify-between pt-2.5">
                   <div className="flex">
-                    <div
-                      className=""
-                    // onClick={() => filePickerRef.current.click()}
-                    >
+                    <div>
                       <PhotographIcon className="h-10 w-10 hoverEffect p-2 text-sky-500 hover:bg-sky-100" />
                     </div>
                     <div onClick={() => setShowEmojis(!showEmojis)}>
